@@ -1,6 +1,21 @@
 <?php require './header.php'; ?>
-
-<form action="./result.php" method="post">
+<script>
+function checkInput()
+{
+	var flag=true;
+	var vals=document.getElementsByName("val[]");
+	for(var i=0;i<81;++i)
+	{
+		if(vals[i].value.length>1)
+		{
+			vals[i].style="color:red;";
+			flag=false;
+		}
+	}
+	return flag;
+}
+</script>
+<form action="./result.php" method="post" onsubmit="return checkInput()">
 	<table class="nine_box">
 		<tr>
 			<td><input name="val[]" value="4" /></td>
@@ -102,6 +117,9 @@
 			<td><input name="val[]" value="9" /></td>
 		</tr>
 	</table>
-	<input class="submit_button" type="submit" value="计算" />
+	<input class="submit_button" type="submit" value="计算" />&nbsp;&nbsp;&nbsp;&nbsp;
+	<input class="submit_button" type="button" onclick="clearInput()" value="清空" />
 </form>
+
+
 <?php require './footer.php'; ?>

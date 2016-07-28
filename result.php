@@ -1,6 +1,7 @@
 <?php require './header.php'; ?>
 
 <?php require './sudoku.php'?>
+
 <?php
 echo <<<HTML
 	<table class="nine_box">
@@ -106,4 +107,14 @@ echo <<<HTML
 	</table>
 HTML;
 ?>
+<script>
+	var vals=document.getElementsByName("val[]");
+	for(var i=0;i<81;++i)
+	{
+		if(vals[i].value.length>1)
+		{
+			vals[i].style="color:red;";
+		}
+	}
+</script>
 <?php require './footer.php'; ?>

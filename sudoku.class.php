@@ -23,7 +23,8 @@ class sudoku{
 		{
 			for($j=0;$j<9;++$j)
 			{
-				if($arr[$i*9+$j!=''] && $arr[$i*9+$j]>0)
+				//echo $arr[$i*9+$j]+"<br />";
+				if($arr[$i*9+$j]!='' && $arr[$i*9+$j]>0)
 					$this->sdke[$i][$j]->setVal($arr[$i*9+$j]);
 			}
 		}
@@ -42,13 +43,16 @@ class sudoku{
 				$val=$this->sdke[$i][$j]->getVal();
 				if($val==0)
 				{
-					$val='';
+					$val='[';
 					$cvals=$this->sdke[$i][$j]->getCVals();
 					foreach($cvals as $v)
 					{
 						$val.=$v;
 					}
+					$val.=']';
 				}
+				
+				//echo $val+"<br />";
 				$arr[$i*9+$j]=$val;
 			}
 		}
@@ -70,10 +74,23 @@ class sudoku{
 	
 	public function calculate()
 	{
+		$changed=false;
 		$i=100;
-		while($this->isFinished()==false)
+		$this->calCV();
+		//$this->cv2val();
+		//$this->cv2val();
+		do{
+			$changed=$this->cv2val();
+		}while($changed);
+		do{
+			$changed=$this->uniqueCV();
+		}while($changed);
+		
+		
+		/*while($i--)
+		//while($this->isFinished()==false)
 		{
-			$this->calCV();
+			//$this->calCV();
 			$changed=false;
 			do{
 				$changed=$this->cv2val();
@@ -83,7 +100,7 @@ class sudoku{
 				$changed=$this->uniqueCv2val();
 				$this->calCV();
 			}while($changed);
-		}
+		}*/
 	}
 	
 	public function isFinished()
@@ -157,6 +174,7 @@ class sudoku{
 				$val=$this->sdke[$i][$j]->getCVal();
 				$this->sdke[$i][$j]->setVal($val);
 				$this->sdke[$i][$j]->clearCV();
+				$this->delCV($i+1,$j+1,$val);
 				$changed=true;
 			}
 		}
@@ -164,9 +182,9 @@ class sudoku{
 	}
 	
 	/**
-	* 将候选值中的数字在九宫 行 列 中唯一的值置值，并清空该位置的候选值
+	* 将候选值中的数字在九宫 行 列 中唯一的值置为候选值
 	*/
-	public function uniqueCv2val()
+	public function uniqueCV()
 	{
 		$changed=false;
 		{//遍历宫格
@@ -198,13 +216,14 @@ class sudoku{
 					}
 					//print_r($tmpval);
 					//return;
-					foreach($tmpval as $val)
+					foreach($tmpval as $key=>$val)
 					{
 						if($val[0]==1)
 						{
-							$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
-							$this->sdke[$val[1]][$val[2]]->setVal($cval);
+							//$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
+							//$this->sdke[$val[1]][$val[2]]->setVal($key);
 							$this->sdke[$val[1]][$val[2]]->clearCV();
+							$this->sdke[$val[1]][$val[2]]->addCV($key);
 							$changed=true;
 							break;
 						}
@@ -212,7 +231,7 @@ class sudoku{
 				}
 			}
 		}
-		$this->calCV();
+		$this->cv2val();
 		{//遍历所有列
 			for($i=0;$i<9;++$i)
 			{
@@ -231,20 +250,21 @@ class sudoku{
 						
 					}
 				}
-				foreach($tmpval as $val)
+				foreach($tmpval as $key=>$val)
 				{
 					if($val[0]==1)
 					{
-						$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
-						$this->sdke[$val[1]][$val[2]]->setVal($cval);
+						//$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
+						//$this->sdke[$val[1]][$val[2]]->setVal($key);
 						$this->sdke[$val[1]][$val[2]]->clearCV();
+						$this->sdke[$val[1]][$val[2]]->addCV($key);
 						$changed=true;
 						break;
 					}
 				}
 			}
 		}
-		$this->calCV();
+		$this->cv2val();
 		{//遍历所有行
 			for($i=0;$i<9;++$i)
 			{
@@ -263,20 +283,65 @@ class sudoku{
 						
 					}
 				}
-				foreach($tmpval as $val)
+				foreach($tmpval as $key=>$val)
 				{
 					if($val[0]==1)
 					{
-						$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
-						$this->sdke[$val[1]][$val[2]]->setVal($cval);
+						//$cval=$this->sdke[$val[1]][$val[2]]->getCVal();
+						//$this->sdke[$val[1]][$val[2]]->setVal($key);
 						$this->sdke[$val[1]][$val[2]]->clearCV();
+						$this->sdke[$val[1]][$val[2]]->addCV($key);
 						$changed=true;
 						break;
 					}
 				}
 			}
 		}
+		$this->cv2val();
 		return $changed;
+	}
+	
+	/**
+	* 删除特定行特定列, 及该行该列所在九宫格的所有特定候选值$cv, $row 与 $col 均从1 开始
+	* 若$row 是 0，则只删除特定 $col 的候选值 $cv
+	* 若$col 是 0, 则只删除特定 $row 的候选值 $cv
+	* 若$row 与 $col 均不为 0 ，则删除该行和该列的候选值，并删除该行该列所在九宫格的候选值 
+	* 若$row 与 $col 均为 0, do nothing
+	*/
+	private function delCV($row,$col,$cVal)
+	{
+		if($row<0 || $row>9 || $col<0 || $col>9)
+			throw new Exception('行列参数不合法');
+		if($col>=1 && $col<=9)//从特定列删除候选值
+		{
+			//echo "从第 $col 列 删除 $cVal <br />";
+			for($i=0;$i<9;++$i)
+			{
+				$this->sdke[$i][$col-1]->delCV($cVal);
+			}
+		}
+		if($row>=1 && $row<=9)//从特定行删除候选值
+		{
+			//echo "从第 $row 行 删除 $cVal <br />";
+			for($i=0;$i<9;++$i)
+			{
+				$this->sdke[$row-1][$i]->delCV($cVal);
+			}
+		}
+		if(($col>=1 && $col<=9) && ($row>=1 && $row<=9))//从该行列所在宫格删除候选值
+		{
+			$colbegin=floor(($col-1)/3)*3;
+			$colend=$colbegin+3;
+			$rowbegin=floor(($row-1)/3)*3;
+			$rowend=$rowbegin+3;
+			for($i=$rowbegin;$i<$rowend;++$i)
+			{
+				for($j=$colbegin;$j<$colend;++$j)
+				{
+					$this->sdke[$i][$j]->delCV($cVal);
+				}
+			}
+		}
 	}
 }
 
@@ -300,6 +365,7 @@ class sudoku_element{
 	public function setVal($val)
 	{
 		$this->val=$val;
+		//echo $val+"<br />";
 	}
 	
 	/**
@@ -442,6 +508,8 @@ class sudoku_element_candidateVal{
 	
 	public function getCVal()
 	{
+		if($this->countCV()!=1)
+			throw new Exception('尝试从多个候选值中获取一个候选值');
 		for($i=0;$i<9;++$i)
 		{
 			if($this->cv[$i]===true)

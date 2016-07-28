@@ -89,5 +89,18 @@ table{
 	margin:2px;
 }
 </style>
+<script>
+function clearInput()
+{
+	if(window.confirm('你确定要清空？'))
+	{
+		var vals=document.getElementsByName("val[]");
+		for(var i=0;i<81;++i)
+			vals[i].value="";
+	}
+}
+
+</script>
+
 </head>
 <body>

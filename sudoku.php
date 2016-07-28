@@ -2,14 +2,17 @@
 require './sudoku.class.php';
 $val=isset($_REQUEST['val'])?$_REQUEST['val']:null;
 //print_r($val);
+
 $test=new sudoku();
 $test->initElementVal($val);
-//$arr=$test->getElementVal();
+$arr=$test->getElementVal();
 //echo "<br /><br />";
 //print_r($arr);
 $test->calculate();
+$arr=$test->getElementVal();
+print_r($arr);
 $arr=$test->getElementCVal();
-//echo "<br /><br />";
+echo "<br /><br />";
 print_r($arr);
 
 $arr=$test->getElementVal();
