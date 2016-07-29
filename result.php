@@ -116,6 +116,7 @@ HTML;
 		{
 			vals[i].style="color:red;";
 		}
+		vals[i].setAttribute("readonly","readonly");
 	}
 </script>
 <?php require './footer.php'; ?>
