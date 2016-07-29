@@ -100,6 +100,31 @@ function clearInput()
 	}
 }
 
+function hideOrShowCV()
+{
+	var  buttonval=document.getElementById("hideOrShowCV");
+	var vals=document.getElementsByName("val[]");
+	for(var i=0;i<81;++i)
+	{
+		if(vals[i].value.length<=1)
+			continue;
+		if(buttonval.value=="HideCV")
+		{
+			vals[i].style="color:white;";
+		}
+		else{
+			vals[i].style="color:red;";
+		}
+	}
+	if(buttonval.value=="HideCV")
+	{
+		buttonval.value="ShowCV"
+	}
+	else{
+		buttonval.value="HideCV"
+	}
+}
+
 </script>
 
 </head>

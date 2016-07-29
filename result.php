@@ -105,6 +105,7 @@ echo <<<HTML
 			<td><input name="val[]" value="$arr[80]" /></td>
 		</tr>
 	</table>
+	<input class="submit_button" id="hideOrShowCV" type="button" value="HideCV" onclick="hideOrShowCV()" />
 HTML;
 ?>
 <script>
