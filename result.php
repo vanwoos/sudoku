@@ -32,7 +32,7 @@ function hideOrShowCV()
 		</td>
 		<td>
 			&nbsp;
-			<?php echo $time_consume.' ms'; ?>
+			<?php echo $time_consume.' Sec'; ?>
 			<!--<input class="submit_button" type="button" value="ValToBox" onclick="ValToBox()" />-->
 		</td>
 	</tr>
