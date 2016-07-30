@@ -17,14 +17,14 @@ class sudoku{
 	* 通过一维数组初始化已知值，一维数组应有81个元素，下标从0开始
 	* return;
 	*/
-	public function initElementVal($arr)
+	public function setElementVals($arr)
 	{
 		for($i=0;$i<9;++$i)
 		{
 			for($j=0;$j<9;++$j)
 			{
 				//echo $arr[$i*9+$j]+"<br />";
-				if($arr[$i*9+$j]!='' && $arr[$i*9+$j]>0)
+				if($arr[$i*9+$j]!='' && intval($arr[$i*9+$j])>0)
 					$this->sdke[$i][$j]->setVal($arr[$i*9+$j]);
 			}
 		}
@@ -33,7 +33,7 @@ class sudoku{
 	/**
 	* 用九宫格里的值导出为一个一维数组，一维数组应有81个元素，下标从0开始
 	*/
-	public function getElementVal()
+	public function getElementVals()
 	{
 		$arr=null;
 		for($i=0;$i<9;++$i)
@@ -59,7 +59,7 @@ class sudoku{
 		return $arr;
 	}
 	
-	public function getElementCVal()
+	public function getElementCVals()
 	{
 		$arr=null;
 		for($i=0;$i<9;++$i)
@@ -72,26 +72,71 @@ class sudoku{
 		return $arr;
 	}
 	
-	public function calculate()
+	/**
+	* 利用之前初始化的数据计算最终结果
+	* 由于经过基本的算法运算之后，仍然可能存在未确定的box，所以之后会使用递归来进行类似与暴力破解的运算，$depth用于限制递归的深度
+	* $depth 为-1 时表示不限制深度，其它不小于或等于0的整数分别对应不同的深度，例如0 表示不进行任何运算, 1 表示只进行基本运算，2 表示进行一次爆破;
+	* 外部进行调用时，$depth 应总是为2;
+	*/
+	public function calculate($depth)
 	{
+		if($depth!=-1 && $depth<=0)
+			return;
+		else if($depth!=-1)
+		{
+			--$depth;
+		}
 		$changed=false;
 		$i=100;
 		$this->calCV();
+		
 		//$this->cv2val();
 		//$this->cv2val();
 		do{
 			$changed=$this->cv2val();
 		}while($changed);
+		if($this->isFinished()) return;
+		
 		do{
 			$changed=$this->uniqueCV();
 		}while($changed);
+		if($this->isFinished()) return;
+		
 		do{
 			$this->boxUniqueCV();
 			$changed1=$this->cv2val()?true:false;
 			$changed2=$this->uniqueCV()?true:false;
 			$changed=$changed1 || $changed2;
 		}while($changed);
+		if($this->isFinished()) return;
+		
 		//$this->boxUniqueCV();
+		if($depth==0) return;
+		
+		for($i=0;$i<9;++$i)
+		{
+			for($j=0;$j<9;++$j)
+			{
+				$sdkebak=$this->sdke;
+				$cvals=$this->sdke[$i][$j]->getCVals();
+				if(count($cvals)<=0) continue;
+				foreach($cvals as $cc)
+				{
+					$vals=$this->getElementVals();
+					$vals[$i*9+$j]=$cc;
+					$newsudoku=new sudoku();
+					$newsudoku->setElementVals($vals);
+					$newsudoku->calculate($depth);
+					if($newsudoku->isFinished())
+					{
+						$vals=$newsudoku->getElementVals();
+						$this->setElementVals($vals);
+						$this->calCV();
+						return;
+					}
+				}
+			}
+		}
 		
 		/*while($i--)
 		//while($this->isFinished()==false)

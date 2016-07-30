@@ -4,18 +4,18 @@ $val=isset($_REQUEST['val'])?$_REQUEST['val']:null;
 //print_r($val);
 
 $test=new sudoku();
-$test->initElementVal($val);
-$arr=$test->getElementVal();
+$test->setElementVals($val);
+$arr=$test->getElementVals();
 //echo "<br /><br />";
 //print_r($arr);
-$test->calculate();
-$arr=$test->getElementVal();
+$test->calculate(2);
+$arr=$test->getElementVals();
 print_r($arr);
-$arr=$test->getElementCVal();
+$arr=$test->getElementCVals();
 echo "<br /><br />";
 print_r($arr);
 
-$arr=$test->getElementVal();
+$arr=$test->getElementVals();
 //echo "<br /><br />";
 //print_r($arr);
 ?>
