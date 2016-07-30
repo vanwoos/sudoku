@@ -102,5 +102,42 @@ function clearInput()
 }
 </script>
 
+<script>
+function ValToBoxs()
+{
+	var textval=document.getElementsByName("textval");
+	var vals=document.getElementsByName("val[]");
+	//alert(textval[0].value);
+	for(var i=0;i<textval[0].value.length;++i)
+	{
+		if(i>=81)
+		{
+			alert("vals[] is out of range");
+			break;
+		}
+		var val=textval[0].value[i];
+		if(val!=" " && val!="0")
+			vals[i].value=val;
+	}
+}
+function BoxsToVal()
+{
+	var textval=document.getElementsByName("textval");
+	var vals=document.getElementsByName("val[]");
+	textval[0].value='';
+	for(var i=0;i<81;++i)
+	{
+		var val=vals[i].value;
+		if(val.length==1)
+		{
+			textval[0].value=textval[0].value+val;
+		}
+		else{
+			textval[0].value=textval[0].value+'0';
+		}
+	}
+}
+</script>
+
 </head>
 <body>

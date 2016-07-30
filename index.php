@@ -14,24 +14,25 @@ function checkInput()
 	}
 	return flag;
 }
-
-function ValToBoxs()
-{
-	var textval=document.getElementsByName("textval");
-	var vals=document.getElementsByName("val[]");
-	//alert(textval[0].value);
-	for(var i=0;i<textval[0].value.length;++i)
-	{
-		var val=textval[0].value[i];
-		if(val!=" " && val!="0")
-			vals[i].value=val;
-	}
-}
 </script>
-<div style="border:1px solid green;width:33em;margin-bottom:1em;padding:1px;">
-<textarea name="textval" style="width:30em;height:5em;"></textarea>
-<input class="submit_button" type="button" value="ValToBoxs" onclick="ValToBoxs()" />
+<div>
+<table>
+	<tr>
+		<td rowspan="2">
+			<textarea name="textval" style="width:30em;height:5em;"></textarea>
+		</td>
+		<td>
+			<input class="submit_button" type="button" value="ValToBoxs" onclick="ValToBoxs()" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input class="submit_button" type="button" value="BoxsToVal" onclick="BoxsToVal()" />
+		</td>
+	</tr>
+</table>
 </div>
+<div>
 <form action="./result.php" method="post" onsubmit="return checkInput()">
 	<table class="nine_box">
 	<?php
@@ -53,6 +54,7 @@ function ValToBoxs()
 	<input class="submit_button" type="submit" value="Calculate" />&nbsp;&nbsp;&nbsp;&nbsp;
 	<input class="submit_button" type="button" onclick="clearInput()" value="ClearInput" />
 </form>
+</div>
 
 
 <?php require './footer.php'; ?>
