@@ -7,6 +7,7 @@ $time_consume=round($time_end-$time_start,5);
 <script>
 function hideOrShowCV()
 {
+	var changed_flag=false;
 	var buttonval=document.getElementById("hideOrShowCV");
 	var vals=document.getElementsByName("val[]");
 	for(var i=0;i<81;++i)
@@ -15,24 +16,26 @@ function hideOrShowCV()
 			continue;
 		if(buttonval.value=="HideCV")
 		{
-			vals[i].style="color:white;";
+			vals[i].style.color="white";
 		}
 		else{
-			vals[i].style="color:red;";
+			vals[i].style.color="red";
 		}
+		changed_flag=true;
 	}
-	buttonval.value=(buttonval.value=="HideCV")?"ShowCV":"HideCV";
+	if(changed_flag)
+		buttonval.value=(buttonval.value=="HideCV")?"ShowCV":"HideCV";
 }
 </script>
 <div>
-<table>
+<table class="valtable">
 	<tr>
 		<td rowspan="2">
-			<textarea name="textval" style="width:30em;height:5em;"></textarea>
+			<textarea name="textval"></textarea>
 		</td>
 		<td>
 			&nbsp;
-			<?php echo $time_consume.' Sec'; ?>
+			<span class="consume_time"><?php echo $time_consume.' Sec'; ?></span>
 			<!--<input class="submit_button" type="button" value="ValToBox" onclick="ValToBox()" />-->
 		</td>
 	</tr>
@@ -66,16 +69,26 @@ function hideOrShowCV()
 
 <script>
 	var vals=document.getElementsByName("val[]");
+	var haveCV=false;
 	for(var i=0;i<81;++i)
 	{
 		if(vals[i].value.length>1)
 		{
-			vals[i].style="color:red;";
+			haveCV=true;
+			vals[i].style.color="red";
+			vals[i].style.fontSize="12px";
 		}
 		else{
-			vals[i].style="background:#f7f7f7;"
+			vals[i].style.background="#f7f7f7"
 		}
 		vals[i].setAttribute("readonly","readonly");
+	}
+	if(!haveCV)
+	{
+		var hideOrShowCVButton=document.getElementById("hideOrShowCV");
+		hideOrShowCVButton.style.background="gray";
+		hideOrShowCVButton.setAttribute("disabled","disabled");
+		
 	}
 </script>
 

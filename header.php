@@ -48,54 +48,76 @@ padding:7px;
 margin:1px;
 }
 body{
-max-width:95%;
+max-width:476px;
+width:100%;
 font-size:15px;
 text-align:left;
 background-color:#fcfcfc;
 color:#000000;
-border:2px solid #ececec;
-margin:auto;
-padding:3px;
+border:0px solid #ececec;
+margin-right:auto;
+padding:2px;
 }
 .c3{
 font-size:12px;
 color:#bcbcbc;
 }
 table{
+	border-spacing:1px;
+}
+div{
 	
 }
+.valtable{
+	border:0px solid gray;
+	margin:1px;
+}
+.valtable tr td{
+	padding:0px;
+}
+.valtable textarea{
+	border:1px solid gray;
+	width:358px;
+	height:50px;
+}
+.consume_time{
+	font-size:12px;
+	color:#555;
+}
 .nine_box{
-	border:1px solid green;
-	padding:1em;
+	border:1px solid gray;
+	padding:15px;
 }
 .nine_box tr td{
 	padding:0px;
 	margin:0px;
 }
 .nine_box tr td input{
-	width:3em;
-	height:3em;
+	width:44px;
+	height:44px;
+	margin:0px;
+	padding:0px;
 	text-align:center;
 	border:1px solid gray;
 }
 .nine_box .rowseparate td{
-	padding-bottom:1em;
+	padding-bottom:10px;
 }
 .nine_box tr .colseparate{
-	padding-right:1em;
+	padding-right:10px;
 }
 .submit_button{
 	border:0px solid green;
 	background:green;
 	color:white;
-	padding:0em 1em 0em 1em;
+	padding:2px 5px 2px 5px;
 	margin:2px;
 }
 </style>
 <script>
 function clearInput()
 {
-	if(window.confirm('Clear all input?'))
+	if(window.confirm('Clear all boxes?'))
 	{
 		var vals=document.getElementsByName("val[]");
 		for(var i=0;i<81;++i)
@@ -141,6 +163,29 @@ function BoxToVal()
 			textval[0].value=textval[0].value+'0';
 		}
 	}
+}
+
+function getCookie(c_name)
+{
+	if (document.cookie.length>0)
+	{
+		c_start=document.cookie.indexOf(c_name + "=");
+		if (c_start!=-1)
+		{
+			c_start=c_start + c_name.length+1;
+			c_end=document.cookie.indexOf(";",c_start);
+		if (c_end==-1) c_end=document.cookie.length;
+			return unescape(document.cookie.substring(c_start,c_end));
+		}
+	}
+	return "";
+}
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date()
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+"="+escape(value)+((expiredays==null)?"":";expires="+exdate.toGMTString());
 }
 </script>
 

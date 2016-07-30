@@ -8,18 +8,29 @@ function checkInput()
 	{
 		if(vals[i].value.length>1)
 		{
-			vals[i].style="color:red;";
+			vals[i].style.color="white";
+			vals[i].style.background="red";
 			flag=false;
+		}
+		else{
+			vals[i].style.color="black";
+			vals[i].style.background="white";
 		}
 	}
 	return flag;
 }
+
+function PutBoxToCookie()
+{
+	
+}
 </script>
 <div>
-<table>
+<div>
+<table class="valtable">
 	<tr>
 		<td rowspan="2">
-			<textarea name="textval" style="width:30em;height:5em;"></textarea>
+			<textarea name="textval"></textarea>
 		</td>
 		<td>
 			<input class="submit_button" type="button" value="ValToBox" onclick="ValToBox()" />
@@ -33,7 +44,7 @@ function checkInput()
 </table>
 </div>
 <div>
-<form action="./result.php" method="post" onsubmit="return checkInput()">
+<form action="./result.php" method="post" onkeyup="checkInput()" onsubmit="return checkInput()">
 	<table class="nine_box">
 	<?php
 		$html_con='';
@@ -55,6 +66,6 @@ function checkInput()
 	<input class="submit_button" type="button" onclick="clearInput()" value="ClearInput" />
 </form>
 </div>
-
+</div>
 
 <?php require './footer.php'; ?>
