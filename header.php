@@ -103,7 +103,7 @@ function clearInput()
 </script>
 
 <script>
-function ValToBoxs()
+function ValToBox()
 {
 	var textval=document.getElementsByName("textval");
 	var vals=document.getElementsByName("val[]");
@@ -120,11 +120,14 @@ function ValToBoxs()
 			vals[i].value=val;
 	}
 }
-function BoxsToVal()
+function BoxToVal()
 {
 	var textval=document.getElementsByName("textval");
 	var vals=document.getElementsByName("val[]");
+	if(!window.confirm('Put the value of boxes to val?'))
+		return;
 	textval[0].value='';
+	
 	for(var i=0;i<81;++i)
 	{
 		var val=vals[i].value;

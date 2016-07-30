@@ -22,12 +22,12 @@ function checkInput()
 			<textarea name="textval" style="width:30em;height:5em;"></textarea>
 		</td>
 		<td>
-			<input class="submit_button" type="button" value="ValToBoxs" onclick="ValToBoxs()" />
+			<input class="submit_button" type="button" value="ValToBox" onclick="ValToBox()" />
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input class="submit_button" type="button" value="BoxsToVal" onclick="BoxsToVal()" />
+			<input class="submit_button" type="button" value="BoxToVal" onclick="BoxToVal()" />
 		</td>
 	</tr>
 </table>

@@ -10,10 +10,10 @@ $arr=$test->getElementVals();
 //print_r($arr);
 $test->calculate(2);
 $arr=$test->getElementVals();
-print_r($arr);
+//print_r($arr);
 $arr=$test->getElementCVals();
-echo "<br /><br />";
-print_r($arr);
+//echo "<br /><br />";
+//print_r($arr);
 
 $arr=$test->getElementVals();
 //echo "<br /><br />";

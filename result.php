@@ -1,6 +1,9 @@
 <?php require './header.php'; ?>
-
+<?php $time_start=microtime(true); ?>
 <?php require './sudoku.php'?>
+<?php $time_end=microtime(true);
+$time_consume=round($time_end-$time_start,5);
+?>
 <script>
 function hideOrShowCV()
 {
@@ -29,12 +32,13 @@ function hideOrShowCV()
 		</td>
 		<td>
 			&nbsp;
-			<!--<input class="submit_button" type="button" value="ValToBoxs" onclick="ValToBoxs()" />-->
+			<?php echo $time_consume.' ms'; ?>
+			<!--<input class="submit_button" type="button" value="ValToBox" onclick="ValToBox()" />-->
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input class="submit_button" type="button" value="BoxsToVal" onclick="BoxsToVal()" />
+			<input class="submit_button" type="button" value="BoxToVal" onclick="BoxToVal()" />
 		</td>
 	</tr>
 </table>
@@ -67,6 +71,9 @@ function hideOrShowCV()
 		if(vals[i].value.length>1)
 		{
 			vals[i].style="color:red;";
+		}
+		else{
+			vals[i].style="background:#f7f7f7;"
 		}
 		vals[i].setAttribute("readonly","readonly");
 	}

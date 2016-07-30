@@ -366,7 +366,7 @@ class sudoku{
 	
 	/**
 	* 遍历九个九宫格，对于每个九宫格，遍历每一行每一列，对于每一行每一列，若候选值中的某个值没在其它行或其它列中出现，
-	* 则说明该行中属于其它九宫格的boxs中的候选值中不包含该值，所以要去掉其它九宫格该行或该列的boxs中的候选值中的该值
+	* 则说明该行中属于其它九宫格的boxes中的候选值中不包含该值，所以要去掉其它九宫格该行或该列的boxes中的候选值中的该值
 	*/
 	private function boxUniqueCV()
 	{
@@ -403,7 +403,7 @@ class sudoku{
 							//print_r($tmpcval);
 						}
 					}
-					//此时$tmpval中的候选值是只在该行的boxs的候选值中出现
+					//此时$tmpval中的候选值是只在该行的boxes的候选值中出现
 					$tmpval=$tmpval->getCVals();
 					//echo "宫格: $i,$j 行: $k ";
 					//print_r($tmpval);
@@ -436,7 +436,7 @@ class sudoku{
 							//print_r($tmpcval);
 						}
 					}
-					//此时$tmpval中的候选值是只在该行的boxs的候选值中出现
+					//此时$tmpval中的候选值是只在该行的boxes的候选值中出现
 					$tmpval=$tmpval->getCVals();
 					//echo "宫格: $i,$j 列: $k ";
 					//print_r($tmpval);
