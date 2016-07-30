@@ -68,10 +68,11 @@ table{
 }
 .nine_box tr td{
 	padding:0px;
+	margin:0px;
 }
-.nine_box td input{
-	width:2em;
-	height:2em;
+.nine_box tr td input{
+	width:3em;
+	height:3em;
 	text-align:center;
 	border:1px solid gray;
 }
@@ -92,39 +93,13 @@ table{
 <script>
 function clearInput()
 {
-	if(window.confirm('你确定要清空？'))
+	if(window.confirm('Clear all input?'))
 	{
 		var vals=document.getElementsByName("val[]");
 		for(var i=0;i<81;++i)
 			vals[i].value="";
 	}
 }
-
-function hideOrShowCV()
-{
-	var  buttonval=document.getElementById("hideOrShowCV");
-	var vals=document.getElementsByName("val[]");
-	for(var i=0;i<81;++i)
-	{
-		if(vals[i].value.length<=1)
-			continue;
-		if(buttonval.value=="HideCV")
-		{
-			vals[i].style="color:white;";
-		}
-		else{
-			vals[i].style="color:red;";
-		}
-	}
-	if(buttonval.value=="HideCV")
-	{
-		buttonval.value="ShowCV"
-	}
-	else{
-		buttonval.value="HideCV"
-	}
-}
-
 </script>
 
 </head>
