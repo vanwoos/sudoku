@@ -114,7 +114,9 @@ div{
 	margin:2px;
 }
 </style>
+
 <script>
+
 function clearInput()
 {
 	if(window.confirm('Clear all boxes?'))
@@ -124,26 +126,33 @@ function clearInput()
 			vals[i].value="";
 	}
 }
-</script>
 
-<script>
 function ValToBox()
 {
 	var textval=document.getElementsByName("textval");
 	var vals=document.getElementsByName("val[]");
-	//alert(textval[0].value);
-	for(var i=0;i<textval[0].value.length;++i)
+
+	if(textval[0].value.length>81)
 	{
-		if(i>=81)
-		{
-			alert("vals[] is out of range");
-			break;
-		}
+		alert("Failed, the length of input is large than 81");
+		return;
+	}
+	if(textval[0].value.length<=0)
+	{
+		alert("Failed, the input is empty");
+		return;
+	}
+	for(var i=0;i<81;++i)
+	{
+		vals[i].value='';
+		if(i>=textval[0].value.length)
+			continue;
 		var val=textval[0].value[i];
 		if(val!=" " && val!="0")
 			vals[i].value=val;
 	}
 }
+
 function BoxToVal()
 {
 	var textval=document.getElementsByName("textval");
